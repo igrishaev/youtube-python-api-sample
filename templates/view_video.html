@@ -1,0 +1,56 @@
+{% extends "view_base.html" %}
+
+
+{% block content %}
+
+
+{% if upload_status %}
+    <div class="alert alert-notify">
+        <p>Current video state: <strong>{{ upload_status }}</strong></p>
+        {% if upload_message %}
+            <p>{{ upload_message }}</p>
+        {% endif %}
+    </div>
+{% endif %}
+
+
+<h1>{{ entry.media.title.text.decode("utf8") }}</h1>
+
+<iframe
+    id="ytplayer"
+    type="text/html"
+    width="640"
+    height="390"
+    src="http://www.youtube.com/embed/{{ video_id }}?autoplay=0"
+    frameborder="0"
+>
+Change your browser!
+</iframe>
+
+<p>
+    <small>
+        <i class="icon-eye-open"></i>&thinsp;{{ entry.statistics.view_count }}
+        &emsp;
+        <i class="icon-star"></i>&thinsp;{% if entry.rating.average %}{{ entry.rating.average }}{% else %}0{% endif %}
+        &emsp;
+        <i class="icon-time"></i>&thinsp;{{ entry.media.duration.seconds|filter_video_duration }}
+        &emsp;
+        category: {{ entry.media.category[0].text }}
+        {% if entry.media.keywords.text %}
+        &emsp;
+        tags: {{ entry.media.keywords.text.decode("utf8") }}
+        {% endif %}
+        &emsp;
+        published: {{ entry.published.text|filter_video_date("%m.%d.%Y") }}
+    </small>
+</p>
+
+{% if entry.media.description.text %}<p>{{ entry.media.description.text.decode("utf8") }}</p>{% endif %}
+
+<a href="{{ url_for('view_upload') }}" class="btn btn-primary btn-large">Upload another video</a>
+
+{% endblock %}
+
+
+
+

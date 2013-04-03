@@ -1,0 +1,44 @@
+{% extends "view_base.html" %}
+
+{% block hero %}
+<p>You must send this data to Youtube server before upload video file.</p>
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if form.errors %}
+    {% for field, errors in form.errors.items() %}
+        {% for error in errors %}
+            <div class="alert alert-error">
+                <p>{{ error }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<form method="POST" action="{{ url_for('view_upload') }}">
+    <fieldset>
+        <legend>Video data</legend>
+        
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.description %}
+                <p><small>{{ field.description }}</small></p>
+            {% endif %}
+        {% endfor %}
+        
+        <div class="form-actions">
+            <button type="submit" class="btn">Continue</button>
+        </div>
+    </fieldset>
+</form>
+
+
+{% endblock %}
+
+
+
+

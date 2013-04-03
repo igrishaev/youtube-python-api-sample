@@ -1,0 +1,28 @@
+{% extends "view_base.html" %}
+
+
+{% block hero %}
+<h1>Youtube browser upload demo</h1>
+<p>Hi! This is the sample implementation of <a href="https://developers.google.com/youtube/getting_started">Youtube API</a> for <a href="http://python.org">Python</a>.</p>
+<p>It uses <a href="http://flask.pocoo.org/">Flask</a>, <a href="http://code.google.com/p/gdata-python-client/">Google Gdata client</a> and <a href="http://www.uploadify.com/">Javascript/Flash uploader</a>.</p>
+<p>This project just a non-commercial mix of libraries and APIs.<br>All sources (with third-party libraries) at <a href="https://github.com/igrishaev/youtube-python-api-sample">Github</a>. Project works in local machine and GAE both (yaml-files included).</p>
+
+
+<p>So, you can upload video files to Youtube with browser to special demo account.</p>
+<p>Don't abuse, please =)</p>
+
+<a href="{{ url_for('view_upload') }}" class="btn btn-primary btn-large">Upload video</a>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+
+{% endblock %}
+
+
+
+

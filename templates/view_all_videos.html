@@ -1,0 +1,42 @@
+{% extends "view_base.html" %}
+
+
+{% block hero %}
+
+<div class="hero-unit">
+    <h2>Anonymous uploads</h2>
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<ul class="thumbnails">
+
+{% for entry in feed %}
+    <li class="span2">
+        <div class="thumbnail">
+            <a href="{{ url_for('view_video', video_id=entry.id.text|filter_video_id) }}" title="{{ entry.media.title.text.decode('utf8') }}">
+                <img src="{{ entry.media.thumbnail[0].url }}">
+            </a>
+            <p>
+                <small>
+                    <i class="icon-eye-open"></i>&thinsp;{{ entry.statistics.view_count }}
+                    &emsp;
+                    <i class="icon-star"></i>&thinsp;{% if entry.rating.average %}{{ entry.rating.average }}{% else %}0{% endif %}
+                    &emsp;
+                    <i class="icon-time"></i>&thinsp;{{ entry.media.duration.seconds|filter_video_duration }}
+                </small>
+            </p>
+        </div>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+
+
+

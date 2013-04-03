@@ -1,0 +1,74 @@
+{% extends "view_base.html" %}
+
+{% block head_extra_js %}
+<script type="text/javascript" src="{{ url_for('static', filename='uploadify/jquery.uploadify.min.js') }}"></script>
+{% endblock %}
+
+{% block head_extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='uploadify/uploadify.css') }}" />
+{% endblock %}
+
+
+
+{% block hero %}
+<p>This page shows two different ways to upload:<br>usal HTTP request with HTML form and Flash uploader with progress bar and AJAX.</p>
+{% endblock %}
+
+
+
+{% block content %}
+<h3>POST upload form (no progress bar)</h3>
+<form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+    <fieldset>
+        
+        <input name="file" type="file" />
+        <input name="token" type="hidden" value="{{ token }}" />
+        
+        <div class="form-actions">
+            <button id="video_upload_submit" class="btn btn-large btn-primary" type="submit">Upload</button>
+        </div>
+        
+    </fieldset>
+</form>
+
+
+
+<h3>Flash upload example (with progress bar)</h3>
+<div id="file_video"></div>
+
+
+<script>
+
+$("#file_video").uploadify({
+    'buttonText': 'Select video',
+    'fileObjName': 'file',
+    'fileTypeDesc': 'Youtube support formats',
+    'fileTypeExts': '*.mov; *.mpeg4; *.avi; *.wmv; *.mpegps; *.flv; *.3gpp; *.webm;',
+    'formData': {'token' : '{{ token }}'},
+    'swf': '{{ url_for("static", filename="uploadify/uploadify.swf") }}',
+    'uploader': '{{ upload_url_ajax }}',
+    
+    'onUploadSuccess': function(file, data, response) {
+        var obj = jQuery.parseJSON(data);
+        if (obj.success) {
+            window.location.replace(obj.url);
+        }
+        else {
+            alert(obj.message);
+        }
+    },
+    
+    'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+        alert('The file ' + file.name + ' could not be uploaded: ' + errorString);
+    },
+    
+});
+</script>
+
+
+
+{% endblock %}
+
+
+
+
